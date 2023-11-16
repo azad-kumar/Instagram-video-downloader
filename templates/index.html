@@ -1,0 +1,136 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>reels downloder</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static '/img/favicon.png ' %}" rel="icon">
+  <link href="{% static '/img/apple-touch-icon.png' %}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static '/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+  <link href="{% static '/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link href="{% static '/css/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top ">
+    <div class="container d-flex align-items-center">
+
+      <h1 class="logo me-auto"><a href="{% url 'index' %}">Insta Spider</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto active" href="{% url 'index' %}">Home</a></li>
+          <li><a class="nav-link scrollto" href="#about">About</a></li>
+          <li><a class="nav-link scrollto" href="#services">Services</a></li>
+
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Hero Section ======= -->
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"
+          data-aos="fade-up" data-aos-delay="200">
+          <h1>INSTA SPIDER</h1>
+          <h2>With our powerful tool download any instagram reels instantly</h2>
+          <form action="{% url 'response' %}" method="post" id="myform">
+            {% csrf_token %}
+            <input type="text" name="url" id="link" class="link_input" placeholder="https://www.instagram.com/reels/CxddHKhS7Mw/" onfocus=this.placeholder='' onblur="this.placeholder='https://www.instagram.com/reels/CxddHKhS7Mw/'">
+            <div class="d-flex justify-content-center justify-content-lg-start">
+              <a class="btn-get-started scrollto" id="download">download</a>
+              <span id="message" class="btn-get-started scrollto">{{ message }}</span>
+            </div>
+          </form>
+
+        </div>
+        <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
+          <img src="{% static '/img/logo.png' %}" class="img-fluid animated" alt="">
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+
+  <!-- Vendor JS Files -->
+  <script src="{% static '/vendor/aos/aos.js' %}"></script>
+  <!-- <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> -->
+  <script src="{% static '/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <!-- <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script> -->
+  <script src="{% static '/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Template Main JS File -->
+  <script src="{% static '/js/main.js' %}"></script>
+
+</body>
+
+
+</html>
+
+
+<script>
+  document.getElementById('download').addEventListener('click', function (event) {
+    var linkInput = document.getElementById('link');
+    var message_box = document.getElementById('message');
+    var url = linkInput.value;
+
+    // Check if the URL matches pattern 1
+    var pattern1 = /^https:\/\/www\.instagram\.com\/reel\/.+\/\?utm_source=ig_web_copy_link$/;
+    if (pattern1.test(url)) {
+      document.getElementById('myform').submit();
+      return;
+    }
+
+    // Check if the URL matches pattern 2 (accepting anything after /reels/)
+    var pattern2 = /^https:\/\/www\.instagram\.com\/reels\/.*$/;
+    if (pattern2.test(url)) {
+      document.getElementById('myform').submit();
+      return;
+    }
+
+    // Add another test (pattern 3)
+    var pattern3 = /^https:\/\/www\.instagram\.com\/your-pattern-here\/.*$/;
+    if (pattern3.test(url)) {
+      document.getElementById('myform').submit();
+      return;
+    }
+
+    // If none of the patterns match, show an error message
+    event.preventDefault();
+    message_box.textContent = "Please enter a valid Instagram URL";
+  });
+
+</script>
+
+
+
